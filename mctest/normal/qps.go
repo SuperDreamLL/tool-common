@@ -6,7 +6,8 @@ import (
 )
 
 func main()  {
-	selectFun()
+	//selectFun()
+	forearchFun2()
 
 }
 
@@ -39,15 +40,16 @@ func selectFun()  {
 	fmt.Println(time.Now().Unix())
 	var start int64
 	count := 0
-	c := time.Tick(time.Millisecond * 10)
+	c := time.Tick(time.Second)
 	start = time.Now().UnixNano()
 	for {
 		startTime := time.Now()
 		select {
 		case <-c:
 			count += 1
-			if count >= 100 {
-				goto finish
+			if count == 5 {
+				//goto finish
+				time.Sleep(time.Second * 5)
 			}
 		}
 		fmt.Println(time.Now().Sub(startTime))
@@ -58,7 +60,25 @@ func selectFun()  {
 	//	count += 1
 	//	time.Sleep(time.Millisecond * 10)
 	//}
-finish:
+//finish:
 	fmt.Println(time.Now().Unix(),time.Now().UnixNano()-start)
-	fmt.Println(count)
+//	fmt.Println(count)
+}
+
+func forearchFun2()  {
+	fmt.Println(time.Now().Unix())
+	var start int64
+	count := 0
+	c := time.Tick(time.Second)
+	start = time.Now().UnixNano()
+	for v := range c {
+		startTime := time.Now()
+		count += 1
+		if count == 5 {
+			//goto finish
+			time.Sleep(time.Second * 5)
+		}
+		fmt.Println(time.Now().Sub(v),time.Now().Sub(startTime))
+	}
+	fmt.Println(time.Now().Unix(),time.Now().UnixNano()-start)
 }
